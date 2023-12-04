@@ -31,6 +31,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -63,6 +64,8 @@ import java.util.List;
  */
 @SuppressWarnings({"unused"})
 public class WheelView extends View implements Runnable {
+
+    private static final String TAG = "WheelView";
     @Deprecated
     public static final int SCROLL_STATE_IDLE = ScrollState.IDLE;
     @Deprecated
@@ -1084,20 +1087,17 @@ public class WheelView extends View implements Runnable {
         // Scroll limit
         float topLimit = (defaultItemPosition) * itemHeight;
         float bottomLimit = -(getItemCount() - 1 - defaultItemPosition) * itemHeight;
-        boolean disableScrollTop = scrollOffsetYCoordinate >=topLimit && move > 0;
+        boolean disableScrollTop = scrollOffsetYCoordinate >= topLimit && move > 0;
         boolean disableScrollBottom = scrollOffsetYCoordinate <= bottomLimit && move < 0;
-        if(!cyclicEnabled)
-        {
-            if(!disableScrollBottom && !disableScrollTop)
-            {
+        if (!cyclicEnabled) {
+            if (!disableScrollBottom && !disableScrollTop) {
                 scrollOffsetYCoordinate += move;
             }
-        }else
-        {
+        } else {
             scrollOffsetYCoordinate += move;
         }
         //
-        
+
         lastPointYCoordinate = (int) event.getY();
         invalidate();
     }
@@ -1125,7 +1125,21 @@ public class WheelView extends View implements Runnable {
             scroller.setFinalY(scroller.getFinalY() + endPoint);
         } else {
             int endPoint = computeDistanceToEndPoint(scrollOffsetYCoordinate % itemHeight);
-            scroller.startScroll(0, scrollOffsetYCoordinate, 0, endPoint);
+            if (endPoint == 0) {
+                int moveCount = getMoveCount(event.getY());
+                Log.d(TAG, "handleActionUp: moveCount=" + moveCount);
+                if (moveCount < 0) {
+                    int positionTemp = Math.max(0, currentPosition + moveCount);
+                    Log.d(TAG, "handleActionUp: positionTemp=" + positionTemp);
+                    smoothScrollTo(positionTemp);
+                } else if (moveCount > 0) {
+                    int positionTemp = Math.min(getItemCount() - 1, currentPosition + moveCount);
+                    Log.d(TAG, "handleActionUp: positionTemp=" + positionTemp);
+                    smoothScrollTo(positionTemp);
+                }
+            } else {
+                scroller.startScroll(0, scrollOffsetYCoordinate, 0, endPoint);
+            }
         }
         // Correct coordinates
         if (!cyclicEnabled) {
@@ -1176,6 +1190,23 @@ public class WheelView extends View implements Runnable {
         } else {
             return -1 * remainder;
         }
+    }
+
+    /**
+     * 计算点击需要上下滚动的条目数
+     */
+    private int getMoveCount(float clickY) {
+        float centerPoint = itemHeight * visibleItemCount / 2f;
+        float distanceToCenter = clickY - centerPoint;
+        int count = 0;
+        float absDistance = Math.abs(distanceToCenter);
+        if (absDistance > halfItemHeight) {
+            count = (int) ((absDistance - halfItemHeight) / itemHeight) + 1;
+            if (count > 0 && distanceToCenter < 0) {
+                return -count;
+            }
+        }
+        return count;
     }
 
     @Override
