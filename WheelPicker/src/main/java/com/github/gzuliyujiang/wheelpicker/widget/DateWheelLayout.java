@@ -180,23 +180,29 @@ public class DateWheelLayout extends BaseWheelLayout {
         monthLabelView.setVisibility(View.VISIBLE);
         dayWheelView.setVisibility(View.VISIBLE);
         dayLabelView.setVisibility(View.VISIBLE);
-        if (dateMode == DateMode.NONE) {
-            yearWheelView.setVisibility(View.GONE);
-            yearLabelView.setVisibility(View.GONE);
-            monthWheelView.setVisibility(View.GONE);
-            monthLabelView.setVisibility(View.GONE);
-            dayWheelView.setVisibility(View.GONE);
-            dayLabelView.setVisibility(View.GONE);
-            return;
-        }
-        if (dateMode == DateMode.MONTH_DAY) {
-            yearWheelView.setVisibility(View.GONE);
-            yearLabelView.setVisibility(View.GONE);
-            return;
-        }
-        if (dateMode == DateMode.YEAR_MONTH) {
-            dayWheelView.setVisibility(View.GONE);
-            dayLabelView.setVisibility(View.GONE);
+        switch (dateMode) {
+            case DateMode.NONE:
+                yearWheelView.setVisibility(View.GONE);
+                yearLabelView.setVisibility(View.GONE);
+                monthWheelView.setVisibility(View.GONE);
+                monthLabelView.setVisibility(View.GONE);
+                dayWheelView.setVisibility(View.GONE);
+                dayLabelView.setVisibility(View.GONE);
+                break;
+            case DateMode.MONTH_DAY:
+                yearWheelView.setVisibility(View.GONE);
+                yearLabelView.setVisibility(View.GONE);
+                break;
+            case DateMode.YEAR_MONTH:
+                dayWheelView.setVisibility(View.GONE);
+                dayLabelView.setVisibility(View.GONE);
+                break;
+            case DateMode.YEAR_ONLY:
+                monthWheelView.setVisibility(View.GONE);
+                monthLabelView.setVisibility(View.GONE);
+                dayWheelView.setVisibility(View.GONE);
+                dayLabelView.setVisibility(View.GONE);
+                break;
         }
     }
 

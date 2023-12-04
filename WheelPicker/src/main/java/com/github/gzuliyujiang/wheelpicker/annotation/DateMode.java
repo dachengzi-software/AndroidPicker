@@ -40,4 +40,8 @@ public @interface DateMode {
      * 月日
      */
     int MONTH_DAY = 2;
+    /**
+     * 年
+     */
+    int YEAR_ONLY = 3;
 }

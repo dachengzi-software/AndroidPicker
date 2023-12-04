@@ -100,22 +100,27 @@ public class CalendarPickerActivity extends BackAbleActivity {
 
     public void onCalendarDateRange(View view) {
         CalendarPicker picker = new CalendarPicker(this);
-        Date currentDate = new Date(System.currentTimeMillis());
-        Calendar minCalendar = DateUtils.calendar(currentDate);
-        minCalendar.add(Calendar.MONTH, -12);
-        minCalendar.set(Calendar.DAY_OF_MONTH, DateUtils.maxDaysOfMonth(minCalendar.getTime()));
-        Date minDate = minCalendar.getTime();
-        Calendar maxCalendar = DateUtils.calendar(currentDate);
-        maxCalendar.setTime(currentDate);
-        maxCalendar.add(Calendar.MONTH, 12);
-        maxCalendar.set(Calendar.DAY_OF_MONTH, DateUtils.maxDaysOfMonth(maxCalendar.getTime()));
-        Date maxDate = maxCalendar.getTime();
-        picker.setRangeDate(minDate, maxDate);
-        if (startTimeInMillis == 0 && endTimeInMillis == 0) {
-            startTimeInMillis = currentDate.getTime() - 3 * android.text.format.DateUtils.DAY_IN_MILLIS;
-            endTimeInMillis = currentDate.getTime() + 3 * android.text.format.DateUtils.DAY_IN_MILLIS;
-        }
-        picker.setSelectedDate(startTimeInMillis, endTimeInMillis);
+        Calendar min = Calendar.getInstance();
+        min.set(Calendar.YEAR, 2020);
+        min.set(Calendar.MONTH, 0);
+        min.set(Calendar.DAY_OF_MONTH, 1);
+//        Date currentDate = new Date(System.currentTimeMillis());
+//        Calendar minCalendar = DateUtils.calendar(currentDate);
+//        minCalendar.add(Calendar.MONTH, -12);
+//        minCalendar.set(Calendar.DAY_OF_MONTH, DateUtils.maxDaysOfMonth(minCalendar.getTime()));
+//        Date minDate = minCalendar.getTime();
+//        Calendar maxCalendar = DateUtils.calendar(currentDate);
+//        maxCalendar.setTime(currentDate);
+//        maxCalendar.add(Calendar.MONTH, 12);
+//        maxCalendar.set(Calendar.DAY_OF_MONTH, DateUtils.maxDaysOfMonth(maxCalendar.getTime()));
+//        Date maxDate = maxCalendar.getTime();
+        picker.setRangeDate(min.getTime(), Calendar.getInstance().getTime());
+//        if (startTimeInMillis == 0 && endTimeInMillis == 0) {
+//            startTimeInMillis = currentDate.getTime() - 3 * android.text.format.DateUtils.DAY_IN_MILLIS;
+//            endTimeInMillis = currentDate.getTime() + 3 * android.text.format.DateUtils.DAY_IN_MILLIS;
+//        }
+//        picker.setSelectedDate(startTimeInMillis, endTimeInMillis);
+        picker.setIntervalNotes("开始", "结束");
         picker.setOnRangeDatePickListener(new OnRangeDatePickListener() {
             @Override
             public void onRangeDatePicked(@NonNull Date startDate, @NonNull Date endDate) {

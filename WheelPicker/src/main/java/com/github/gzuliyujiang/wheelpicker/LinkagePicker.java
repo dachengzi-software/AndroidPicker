@@ -25,6 +25,7 @@ import com.github.gzuliyujiang.dialog.ModalDialog;
 import com.github.gzuliyujiang.wheelpicker.contract.LinkageProvider;
 import com.github.gzuliyujiang.wheelpicker.contract.OnLinkagePickedListener;
 import com.github.gzuliyujiang.wheelpicker.widget.LinkageWheelLayout;
+import com.github.gzuliyujiang.wheelpicker.widget.QuarterWheelLayout;
 import com.github.gzuliyujiang.wheelview.widget.WheelView;
 
 /**

@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.github.gzuliyujiang.dialog.DialogConfig;
 import com.github.gzuliyujiang.dialog.DialogStyle;
 import com.github.gzuliyujiang.fallback.R;
-import com.github.gzuliyujiang.fallback.custom.AntFortuneLikeProvider;
+import com.github.gzuliyujiang.wheelpicker.impl.QuarterProvider;
 import com.github.gzuliyujiang.wheelpicker.OptionPicker;
 import com.github.gzuliyujiang.wheelpicker.contract.OnOptionPickedListener;
 import com.github.gzuliyujiang.wheelpicker.widget.LinkageWheelLayout;
@@ -48,7 +48,8 @@ public class MainActivity extends FragmentActivity {
         OptionWheelLayout optionWheelLayout = findViewById(R.id.wheel_option);
         optionWheelLayout.setData(Arrays.asList("aaa", "bbb", "ccc", "123", "xxx", "yyy", "zzz"));
         LinkageWheelLayout linkageWheelLayout = findViewById(R.id.wheel_linkage);
-        linkageWheelLayout.setData(new AntFortuneLikeProvider());
+        linkageWheelLayout.setData(new QuarterProvider());
+//        linkageWheelLayout.setData(new AntFortuneLikeProvider());
     }
 
     private void startActivity(Class<?> cls) {

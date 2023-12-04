@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import com.github.gzuliyujiang.fallback.R;
 import com.github.gzuliyujiang.fallback.custom.AntFortuneLikePicker;
 import com.github.gzuliyujiang.wheelpicker.CarPlatePicker;
+import com.github.gzuliyujiang.wheelpicker.QuarterPicker;
 import com.github.gzuliyujiang.wheelpicker.contract.OnCarPlatePickedListener;
 import com.github.gzuliyujiang.wheelpicker.contract.OnLinkagePickedListener;
 
@@ -61,4 +62,15 @@ public class LinkagePickerActivity extends BackAbleActivity implements OnCarPlat
         picker.show();
     }
 
+    public void onQuarter(View view) {
+        QuarterPicker picker = new QuarterPicker(this);
+        picker.setDefaultValue("", "", "");
+        picker.setOnQuarterPickedListener(new QuarterPicker.OnQuarterPickedListener() {
+            @Override
+            public void onQuarterPicked(String year, String quarter, int yearItem, int quarterItem) {
+                Toast.makeText(LinkagePickerActivity.this, year + ":" + quarter + ":" + yearItem + ":" + quarterItem, Toast.LENGTH_SHORT).show();
+            }
+        });
+        picker.show();
+    }
 }
