@@ -1285,6 +1285,16 @@ public class WheelView extends View implements Runnable {
             @Override
             public void onAnimationEnd(Animator animation) {
                 scrollTo(position);
+                // Correct coordinates
+                if (!cyclicEnabled) {
+                    if (scroller.getFinalY() > maxFlingYCoordinate) {
+                        scroller.setFinalY(maxFlingYCoordinate);
+                    } else if (scroller.getFinalY() < minFlingYCoordinate) {
+                        scroller.setFinalY(minFlingYCoordinate);
+                    }
+                }
+                handler.post(WheelView.this);
+                cancelTracker();
             }
         });
         animator.start();
